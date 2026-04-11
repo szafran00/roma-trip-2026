@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roma Trip 2026 - Franek & Tata</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8D59E;
+    --dark: #1A1A2E;
+    --darker: #12121F;
+    --card: #1F1F35;
+    --card-hover: #282845;
+    --text: #E8E8F0;
+    --text-muted: #9999B0;
+    --accent-blue: #4A7BF7;
+    --accent-green: #4CAF82;
+    --accent-red: #E85D5D;
+    --accent-purple: #9B6DFF;
+    --accent-orange: #F0923B;
+    --accent-pink: #E86FAD;
+    --border: rgba(255,255,255,0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--darker);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 600px 400px at 20% 30%, rgba(201,168,76,0.08), transparent),
+      radial-gradient(ellipse 500px 500px at 80% 70%, rgba(74,123,247,0.06), transparent);
+  }
+
+  .hero-content { position: relative; z-index: 1; padding: 2rem; max-width: 800px; }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero .subtitle {
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    color: var(--text-muted);
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+
+  .hero .dates {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 0.75rem 2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.95rem;
+    color: var(--gold-light);
+    backdrop-filter: blur(10px);
+  }
+
+  .hero .dates .sep { color: var(--text-muted); }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: bounce 2s infinite;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    text-align: center;
+  }
+
+  .scroll-hint span { display: block; font-size: 1.5rem; margin-top: 0.25rem; }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-8px); }
+  }
+
+  /* NAVIGATION */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(18,18,31,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0;
+    overflow-x: auto;
+  }
+
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0;
+    padding: 0 1rem;
+  }
+
+  .nav a {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 1rem 1.2rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: color 0.2s, border-color 0.2s;
+    border-bottom: 2px solid transparent;
+  }
+
+  .nav a:hover, .nav a.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  /* SECTIONS */
+  .section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem;
+  }
+
+  .section-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-header p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    max-width: 600px;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  /* CARDS */
+  .grid { display: grid; gap: 1.25rem; }
+  .grid-2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+  .grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .card:hover {
+    background: var(--card-hover);
+    transform: translateY(-2px);
+  }
+
+  .card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .card h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+
+  .card p, .card li {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .card ul { list-style: none; padding: 0; }
+  .card ul li { padding: 0.2rem 0; }
+  .card ul li::before { content: ''; }
+
+  .badge {
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .badge-free { background: rgba(76,175,130,0.15); color: var(--accent-green); }
+  .badge-paid { background: rgba(240,146,59,0.15); color: var(--accent-orange); }
+  .badge-tata { background: rgba(155,109,255,0.15); color: var(--accent-purple); }
+  .badge-franek { background: rgba(74,123,247,0.15); color: var(--accent-blue); }
+  .badge-both { background: rgba(201,168,76,0.15); color: var(--gold); }
+  .badge-event { background: rgba(232,111,173,0.15); color: var(--accent-pink); }
+
+  /* FLIGHT / BOOKING INFO CARDS */
+  .info-banner {
+    background: linear-gradient(135deg, var(--card) 0%, rgba(74,123,247,0.08) 100%);
+    border: 1px solid rgba(74,123,247,0.15);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .info-banner h3 {
+    color: var(--accent-blue);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .flight-row {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    flex-wrap: wrap;
+  }
+
+  .flight-point {
+    text-align: center;
+    min-width: 80px;
+  }
+
+  .flight-point .code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .flight-point .city {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  .flight-point .time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.1rem;
+    color: var(--gold);
+    margin-top: 0.25rem;
+  }
+
+  .flight-line {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-width: 100px;
+  }
+
+  .flight-line::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--text-muted), var(--gold), var(--text-muted));
+    opacity: 0.3;
+  }
+
+  .flight-line span {
+    position: relative;
+    background: var(--card);
+    padding: 0.2rem 0.6rem;
+    font-size: 1.2rem;
+  }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .detail-item label {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 0.2rem;
+  }
+
+  .detail-item span {
+    font-size: 0.92rem;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .detail-item .mono {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--gold-light);
+  }
+
+  /* TIMELINE / ITINERARY */
+  .timeline { position: relative; padding-left: 2rem; }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.5rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--gold), var(--accent-blue), var(--accent-purple), var(--gold));
+    opacity: 0.3;
+  }
+
+  .timeline-day {
+    position: relative;
+    margin-bottom: 2rem;
+  }
+
+  .timeline-day::before {
+    content: '';
+    position: absolute;
+    left: -1.65rem;
+    top: 0.35rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 2px solid var(--darker);
+  }
+
+  .timeline-day .day-header {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: var(--gold);
+    margin-bottom: 0.15rem;
+  }
+
+  .timeline-day .day-date {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 0.75rem;
+  }
+
+  .timeline-activity {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .timeline-activity .time-slot {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--gold-light);
+    white-space: nowrap;
+    min-width: 50px;
+    padding-top: 0.1rem;
+  }
+
+  .timeline-activity .activity-body h4 {
+    font-size: 0.92rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+    color: var(--text);
+  }
+
+  .timeline-activity .activity-body p {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+
+  /* CHECKIN ALERT */
+  .alert {
+    background: linear-gradient(135deg, rgba(232,93,93,0.08), rgba(232,93,93,0.02));
+    border: 1px solid rgba(232,93,93,0.2);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .alert-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+  .alert h4 { color: var(--accent-red); font-size: 0.9rem; margin-bottom: 0.3rem; }
+  .alert p { font-size: 0.85rem; color: var(--text-muted); }
+  .alert a { color: var(--accent-blue); }
+
+  .alert-info {
+    background: linear-gradient(135deg, rgba(74,123,247,0.08), rgba(74,123,247,0.02));
+    border-color: rgba(74,123,247,0.2);
+  }
+  .alert-info h4 { color: var(--accent-blue); }
+
+  /* PRACTICAL INFO */
+  .practical-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+
+  .practical-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+
+  .practical-item h4 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .practical-item p, .practical-item li {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .practical-item ul { list-style: none; padding: 0; }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* CODE / MONO */
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    background: rgba(255,255,255,0.05);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.85em;
+    color: var(--gold-light);
+  }
+
+  a { color: var(--accent-blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* RESPONSIVENESS */
+  @media (max-width: 768px) {
+    .section { padding: 2.5rem 1rem; }
+    .flight-row { flex-direction: column; gap: 0.5rem; }
+    .flight-line { width: 100%; min-height: 30px; }
+    .flight-line::before { display: none; }
+    .nav-inner { padding: 0 0.5rem; }
+    .nav a { padding: 0.75rem 0.8rem; font-size: 0.75rem; }
+    .detail-grid { grid-template-columns: repeat(2, 1fr); }
+    .timeline-activity { flex-direction: column; gap: 0.25rem; }
+  }
+
+  /* PRINT */
+  @media print {
+    .nav, .scroll-hint { display: none; }
+    .hero { min-height: auto; padding: 2rem; }
+    body { background: white; color: #333; }
+    .card, .info-banner, .timeline-activity, .practical-item, .alert {
+      border: 1px solid #ddd;
+      background: #fafafa;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>Roma</h1>
+    <p class="subtitle">Franek & Tata - la dolce vita, kwiecień 2026</p>
+    <div class="dates">
+      <span>20.04</span>
+      <span class="sep">-</span>
+      <span>29.04.2026</span>
+      <span class="sep">|</span>
+      <span>9 nocy</span>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    przewiń w dół
+    <span>&#8595;</span>
+  </div>
+</section>
+
+<!-- ==================== NAVIGATION ==================== -->
+<a href="#flights" class="skip-link" style="position:absolute;left:-9999px;top:0;z-index:999;background:var(--gold);color:var(--dark);padding:0.5rem 1rem;font-weight:600;">Przejdź do treści</a>
+<nav class="nav" id="nav" aria-label="Nawigacja strony">
+  <div class="nav-inner">
+    <a href="#flights">&#9992; Lot</a>
+    <a href="#accommodation">&#127968; Mieszkanie</a>
+    <a href="#transport">&#128652; Transport</a>
+    <a href="#itinerary">&#128197; Plan dnia</a>
+    <a href="#art">&#127912; Sztuka & Tata</a>
+    <a href="#social">&#127911; Social & Franek</a>
+    <a href="#events">&#127878; Eventy</a>
+    <a href="#practical">&#128161; Praktyczne</a>
+  </div>
+</nav>
+
+<!-- ==================== FLIGHTS ==================== -->
+<hr class="divider">
+<div class="section" id="flights">
+  <div class="section-header">
+    <h2>&#9992; Loty</h2>
+    <p>Ryanair, rezerwacja <code>YZ4MVC</code> - Kraków - Rzym Ciampino</p>
+  </div>
+
+  <!-- OUTBOUND -->
+  <div class="info-banner">
+    <h3>&#128747; Lot w jedną stronę - 20 kwietnia (poniedziałek)</h3>
+    <div class="flight-row">
+      <div class="flight-point">
+        <div class="code">KRK</div>
+        <div class="city">Kraków</div>
+        <div class="time">16:45</div>
+      </div>
+      <div class="flight-line"><span>&#9992;&#65039;</span></div>
+      <div class="flight-point">
+        <div class="code">CIA</div>
+        <div class="city">Rzym Ciampino</div>
+        <div class="time">18:45</div>
+      </div>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-item">
+        <label>Numer lotu</label>
+        <span class="mono">FR 1469</span>
+      </div>
+      <div class="detail-item">
+        <label>Marcin (Tata)</label>
+        <span>Miejsce <code>21D</code></span>
+      </div>
+      <div class="detail-item">
+        <label>Franciszek</label>
+        <span>Miejsce <code>21C</code></span>
+      </div>
+      <div class="detail-item">
+        <label>Bagaż</label>
+        <span>Priority + 2 bagaże podręczne</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RETURN -->
+  <div class="info-banner">
+    <h3>&#128747; Lot powrotny - 29 kwietnia (środa)</h3>
+    <div class="flight-row">
+      <div class="flight-point">
+        <div class="code">CIA</div>
+        <div class="city">Rzym Ciampino</div>
+        <div class="time">20:35</div>
+      </div>
+      <div class="flight-line"><span>&#9992;&#65039;</span></div>
+      <div class="flight-point">
+        <div class="code">KRK</div>
+        <div class="city">Kraków</div>
+        <div class="time">22:35</div>
+      </div>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-item">
+        <label>Numer lotu</label>
+        <span class="mono">FR 1470</span>
+      </div>
+      <div class="detail-item">
+        <label>Marcin (Tata)</label>
+        <span>Miejsce <code>21D</code></span>
+      </div>
+      <div class="detail-item">
+        <label>Franciszek</label>
+        <span>Miejsce <code>21C</code></span>
+      </div>
+      <div class="detail-item">
+        <label>Koszt łączny</label>
+        <span class="mono">1 359,98 PLN</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert">
+    <div class="alert-icon">&#9888;&#65039;</div>
+    <div>
+      <h4>Karty pokładowe - tylko w aplikacji!</h4>
+      <p>Ryanair nie akceptuje wydrukowanych kart pokładowych. Pobierz aplikację Ryanair i miej karty pokładowe w telefonie. Dotyczy obu pasażerów.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ACCOMMODATION ==================== -->
+<hr class="divider">
+<div class="section" id="accommodation">
+  <div class="section-header">
+    <h2>&#127968; Mieszkanie</h2>
+    <p>San Peter's Heaven's Door - apartament przy Watykanie</p>
+  </div>
+
+  <div class="info-banner" style="border-color: rgba(76,175,130,0.15); background: linear-gradient(135deg, var(--card) 0%, rgba(76,175,130,0.06) 100%);">
+    <h3 style="color: var(--accent-green);">&#127969; San Peter's Heaven's Door</h3>
+    <div class="detail-grid">
+      <div class="detail-item">
+        <label>Adres</label>
+        <span>Via S. Evaristo 157, Scala C, Interno 4, Primo Piano</span>
+      </div>
+      <div class="detail-item">
+        <label>Dzielnica</label>
+        <span>Aurelio, 00165 Roma</span>
+      </div>
+      <div class="detail-item">
+        <label>Check-in</label>
+        <span class="mono">Pn 20.04 od 15:00</span>
+      </div>
+      <div class="detail-item">
+        <label>Check-out</label>
+        <span class="mono">Śr 29.04 do 11:00</span>
+      </div>
+      <div class="detail-item">
+        <label>Numer rezerwacji</label>
+        <span class="mono">6797076212</span>
+      </div>
+      <div class="detail-item">
+        <label>PIN (poufny)</label>
+        <span class="mono">7032</span>
+      </div>
+      <div class="detail-item">
+        <label>Goście</label>
+        <span>2 osoby dorosłe, 9 nocy</span>
+      </div>
+      <div class="detail-item">
+        <label>Telefon do hosta</label>
+        <span class="mono">+39 347 533 1835</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>&#128176; Koszty pobytu</h3>
+      <ul>
+        <li>Apartament: <strong>1 133,26 EUR</strong></li>
+        <li>VAT: 113,33 EUR</li>
+        <li>Opłata za sprzątanie: 40 EUR</li>
+        <li>Rabat Booking.com: -90,66 EUR</li>
+        <li>Zapłacono (Revolut Pay): <strong>1 195,93 EUR</strong></li>
+        <li style="color: var(--accent-orange); margin-top: 0.5rem;">&#9888; Podatek miejski: <strong>6 EUR / os / noc = 108 EUR</strong><br>
+        <small>Płatny na miejscu</small></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>&#128273; Dostęp do mieszkania</h3>
+      <ul>
+        <li>Wejście przez <strong>Vikey Smart Lock</strong> + Web App</li>
+        <li>Kod rezerwacji Vikey: <code>JAIUHWM6</code></li>
+        <li>Gospodarze: <strong>Giuseppe & Cesare</strong></li>
+        <li style="color: var(--accent-orange); margin-top: 0.5rem;">&#9888; Nie mogą wystawić faktury (osoba prywatna)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="alert" style="margin-top: 1.25rem;">
+    <div class="alert-icon">&#128221;</div>
+    <div>
+      <h4>Online check-in wymagany przed przyjazdem!</h4>
+      <p>Wypełnij formularz check-in Vikey (wymagane prawnie): <a href="https://guest.vikey.it/checkin/JAIUHWM6" target="_blank">guest.vikey.it/checkin/JAIUHWM6</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TRANSPORT ==================== -->
+<hr class="divider">
+<div class="section" id="transport">
+  <div class="section-header">
+    <h2>&#128652; Transport</h2>
+    <p>Autobus Terravision: lotnisko Ciampino - Roma Termini i z powrotem</p>
+  </div>
+
+  <div class="grid grid-2">
+    <div class="info-banner">
+      <h3>&#128652; Ciampino &#8594; Roma Termini</h3>
+      <div class="detail-grid">
+        <div class="detail-item">
+          <label>Data</label>
+          <span class="mono">20.04.2026</span>
+        </div>
+        <div class="detail-item">
+          <label>Trasa</label>
+          <span>Ciampino Airport &#8594; Termini (via Giolitti)</span>
+        </div>
+        <div class="detail-item">
+          <label>Ważność</label>
+          <span>24h od daty wylotu</span>
+        </div>
+        <div class="detail-item">
+          <label>Pasażerowie</label>
+          <span>2 dorosłych</span>
+        </div>
+      </div>
+    </div>
+    <div class="info-banner">
+      <h3>&#128652; Roma Termini &#8594; Ciampino</h3>
+      <div class="detail-grid">
+        <div class="detail-item">
+          <label>Data</label>
+          <span class="mono">29.04.2026</span>
+        </div>
+        <div class="detail-item">
+          <label>Trasa</label>
+          <span>Termini (via Giolitti) &#8594; Ciampino Airport</span>
+        </div>
+        <div class="detail-item">
+          <label>Ważność</label>
+          <span>24h od daty wylotu</span>
+        </div>
+        <div class="detail-item">
+          <label>Pasażerowie</label>
+          <span>2 dorosłych</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-grid" style="margin-top: 1rem;">
+    <div class="detail-item">
+      <label>Numer rezerwacji</label>
+      <span class="mono">7RSEAG</span>
+    </div>
+    <div class="detail-item">
+      <label>Koszt</label>
+      <span class="mono">117,00 PLN</span>
+    </div>
+    <div class="detail-item">
+      <label>Bagaż</label>
+      <span>Max. 1 podręczny (10 kg) + max. 2 walizki (23 kg)</span>
+    </div>
+  </div>
+
+  <div class="alert-info alert" style="margin-top: 1.25rem;">
+    <div class="alert-icon">&#128205;</div>
+    <div>
+      <h4>Przystanek Terravision @ Termini</h4>
+      <p>Autobusy Terravision odjeżdżają z <strong>Via Giolitti</strong> (strona wschodnia dworca Roma Termini). Szukajcie pomarańczowych autobusów z logo Terravision. Bilety w Google Wallet.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ITINERARY ==================== -->
+<hr class="divider">
+<div class="section" id="itinerary">
+  <div class="section-header">
+    <h2>&#128197; Przykładowy plan dnia po dniu</h2>
+    <p>Propozycja itinerary z elastycznością - mieszanka aktywności wspólnych, osobnych, i spontanicznych</p>
+  </div>
+
+  <div class="timeline">
+    <!-- DAY 1 -->
+    <div class="timeline-day">
+      <div class="day-header">Dzień 1 - Przylot & pierwszy wieczór</div>
+      <div class="day-date">Poniedziałek 20 kwietnia</div>
+      <div class="timeline-activity">
+        <div class="time-slot">16:45</div>
+        <div class="activity-body">
+          <h4>&#9992; Wylot z Krakowa (FR1469)</h4>
+          <p>Lądowanie w Ciampino 18:45. Terravision do Roma Termini, potem metro/bus do mieszkania.</p>
+        </div>
+      </div>
+      <div class="timeline-activity">
+        <div class="time-slot">~20:00</div>
+        <div class="activity-body">
+          <h4>&#127837; Kolacja w okolicy Aurelio / Trastevere</h4>
+          <p>Rozpakowanie, spacer po okolicy, pierwsza pizza romana. Polecane: <strong>Pizzeria Ivo</strong> (Trastevere) lub coś lokalnego w Aurelio.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 2 -->
+    <div class="timeline-day">
+      <div class="day-header">Dzień 2 - Natale di Roma!</div>
+      <div class="day-date">Wtorek 21 kwietnia - 2779 urodziny Rzymu</div>
+      <div class="timeline-activity">
+        <div class="time-slot">Rano</div>
+        <div class="activity-body">
+          <h4>&#127963; Koloseum & Forum Romanum <span class="badge badge-both">razem</span></h4>
+          <p>Pierwszy pełny dzień = klasyka. Zarezerwować bilety online z wyprzedzeniem! W dniu urodzin Rzymu atmosfera szczególna.</p>
+        </div>
+      </div>
+      <div class="timeline-activity">
+        <div class="time-slot">12:00</div>
+        <div class="activity-body">
+          <h4>&#127774; Panteon - efekt świetlny! <span class="badge badge-free">gratis</span></h4>
+          <p>W samo południe 21 kwietnia promień słońca przez oculus idealnie oświetla brązowy portal wejściowy. Zjawisko raz w roku!</p>
+        </div>
+      </div>
+      <div class="timeline-activity">
+        <div class="time-slot">PM</div>
+        <div class="activity-body">
+          <h4>&#9876; Parada Natale di Roma @ Circo Massimo <span class="badge badge-free">gratis</span> <span class="badge badge-event">event</span></h4>
+          <p>~2000 uczestników w historycznych kostiumach: centurioni, westalki, gladiatorzy. Obozy rzymskie i barbarzyńskie, ceremonie odnowienia świętego ognia.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 3 -->
+    <div class="timeline-day">
+      <div class="day-header">Dzień 3 - Watykan</div>
+      <div class="day-date">Środa 22 kwietnia</div>
+      <div class="timeline-activity">
+        <div class="time-slot">8:00</div>
+        <div class="activity-body">
+          <h4>&#9961; Muzea Watykańskie & Kaplica Sykstyńska <span class="badge badge-both">razem</span></h4>
+          <p>Wejście rano, żeby uniknąć tłumów. Mieszkanie blisko Watykanu - wielki plus! Bilety z rezerwacją online.</p>
+        </div>
+      </div>
+      <div class="timeline-activity">
+        <div class="time-slot">PM</div>
+        <div class="activity-body">
+          <h4>&#9962; Bazylika Św. Piotra & Kopuła <span class="badge badge-free">bazylika gratis</span></h4>
+          <p>Wejście na kopułę (8 EUR) - najlepszy widok na Rzym. Potem spacer przez Castel Sant'Angelo.</p>
+        </div>
+      </div>
+      <div class="timeline-activity">
+        <div class="time-slot">Wieczór</div>
+        <div class="activity-body">
+          <h4>&#127860; Kolacja w Borgo Pio</h4>
+          <p>Urocza uliczka tuż przy Watykanie, pełna restauracji. Blisko domu!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 4 -->
+    <div class="timeline-day">
+      <div class="day-header">Dzień 4 - Caravaggio & Barok</div>
+      <div class="day-date">Czwartek 23 kwietnia</div>
+      <div class="timeline-activity">
+        <div class="time-slot">Rano</div>
+        <div class="activity-body">
+          <h4>&#127912; San Luigi dei Francesi - Caravaggio x3 <span class="badge badge-free">gratis</span> <span class="badge badge-tata">tata</span></h4>
+          <p>Trzy arcydzieła Caravaggia w Kaplicy Contarellich: "Powołanie Św. Mateusza", "Inspiracja Św. Mateusza", "Męczeństwo Św. Mateusza". Mistrzostwo światłocienia.</p>
+        </div>
+      </div>
+      <div class="timeline-activity">
+        <div class="time-slot">11:00</div>
+        <div class="activity-body">
+          <h4>&#127912; Santa Maria del Popolo - kolejny Caravaggio <span class="badge badge-free">gratis</span> <span class="badge badge-tata">tata</span></h4>
+          <p>"Nawrócenie Św. Pawła" i "Ukrzyżowanie Św. Piotra" w Kaplicy Cerasi. Plus freski Pintoricchia o surrealistycznym klimacie!</p>
+        </div>
+      </div>
+      <div class="timeline-activity">
+        <div class="time-slot">PM</div>
+        <div class="activity-body">
+          <h4>&#127912; Palazzo Spada - iluzja Borrominiego! <span class="badge badge-paid">5 EUR</span> <span class="badge badge-tata">tata</span></h4>
+          <p>Słynna perspektywa optyczna (trompe-l'oeil) - korytarz który wygląda na 37m, ma 8m. Raj dla surrealisty! Galeria z Renesansem i Barokiem.</p>
+        </div>
+      </div>
+      <div class="timeline-activity">
+        <div class="time-slot">16:00</div>
+        <div class="activity-body">
+          <h4>&#127912; Santa Maria della Vittoria - Bernini <span class="badge badge-free">gratis</span></h4>
+          <p>"Ekstaza Św. Teresy" Berniniego - dramatyczna, teatralna, na granicy surrealizmu. Światło i emocja w kamieniu.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 5 -->
+    <div class="timeline-day">
+      <div class="day-header">Dzień 5 - De Chirico & Sztuka Współczesna</div>
+      <div class="day-date">Piątek 24 kwietnia</div>
+      <div class="timeline-activity">
+        <div class="time-slot">10:00</div>
+        <div class="activity-body">
+          <h4>&#127912; Casa-Museo Giorgio de Chirico <span class="badge badge-paid">~10 EUR</span> <span class="badge badge-tata">tata</span></h4>
+          <p>Dom-muzeum ojca malarstwa metafizycznego. Via di Porta Rondanini 27. Obrazy, rzeźby i osobista kolekcja. Rezerwacja obowiązkowa! <a href="https://www.casadechirico.org" target="_blank">casadechirico.org</a></p>
+        </div>
+      </div>
+      <div class="timeline-activity">
+        <div class="time-slot">PM</div>
+        <div class="activity-body">
+          <h4>&#127912; MAXXI - Muzeum Sztuki XXI Wieku <span class="badge badge-paid">~12 EUR</span> <span class="badge badge-tata">tata</span></h4>
+          <p>Najważniejsze muzeum sztuki współczesnej we Włoszech. Budynek Zahy Hadid sam w sobie jest dziełem. Wt-Nd 11:00-19:00, czw do 22:00.</p>
+        </div>
+      </div>
+      <div class="timeline-activity">
+        <div class="time-slot">Wieczór</div>
+        <div class="activity-body">
+          <h4>&#127911; Open Mic Rome / Jam Session <span class="badge badge-franek">franek</span></h4>
+          <p>Sprawdź Open Mic Rome (Facebook: <a href="https://www.facebook.com/groups/openmicrome/" target="_blank">openmicrome</a>) lub <a href="https://www.openmicrome.com" target="_blank">openmicrome.com</a> - lista aktualnych eventów muzycznych.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 6 -->
+    <div class="timeline-day">
+      <div class="day-header">Dzień 6 - Święto Wyzwolenia & Trastevere</div>
+      <div class="day-date">Sobota 25 kwietnia - Festa della Liberazione</div>
+      <div class="timeline-activity">
+        <div class="time-slot">Rano</div>
+        <div class="activity-body">
+          <h4>&#127987; Ceremonie przy Vittoriano <span class="badge badge-free">gratis</span> <span class="badge badge-event">event</span></h4>
+          <p>25 kwietnia - Dzień Wyzwolenia Włoch. Uroczystości przy Ołtarzu Ojczyzny (Piazza Venezia). Prezydent składa wieniec.</p>
+        </div>
+      </div>
+      <div class="timeline-activity">
+        <div class="time-slot">PM</div>
+        <div class="activity-body">
+          <h4>&#127800; Trastevere - spacer & street art <span class="badge badge-both">razem</span></h4>
+          <p>Najbardziej klimatyczna dzielnica Rzymu. Santa Maria in Trastevere (darmowe, piękne mozaiki). Lody u <strong>Fatamorgana</strong>.</p>
+        </div>
+      </div>
+      <div class="timeline-activity">
+        <div class="time-slot">Wieczór</div>
+        <div class="activity-body">
+          <h4>&#127866; Language Exchange / Social Meetup <span class="badge badge-franek">franek</span></h4>
+          <p>Sprawdź "Roma Language and Social Exchange" na Meetup. Hard Rock Cafe Rome lub CULTO w Trastevere hostują regularne eventy.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 7 -->
+    <div class="timeline-day">
+      <div class="day-header">Dzień 7 - Galerie & Board Games</div>
+      <div class="day-date">Niedziela 26 kwietnia</div>
+      <div class="timeline-activity">
+        <div class="time-slot">Rano</div>
+        <div class="activity-body">
+          <h4>&#127912; Galleria Nazionale d'Arte Moderna (GNAM) <span class="badge badge-paid">~12 EUR</span> <span class="badge badge-tata">tata</span></h4>
+          <p>Viale delle Belle Arti 131. Włoscy surrealiści, De Chirico, cała historia sztuki nowoczesnej. Wt-Nd 8:30-19:30.</p>
+        </div>
+      </div>
+      <div class="timeline-activity">
+        <div class="time-slot">PM</div>
+        <div class="activity-body">
+          <h4>&#127922; Avalon Roma - gry planszowe! <span class="badge badge-franek">franek</span></h4>
+          <p>Najlepsze miejsce na gry planszowe w Rzymie. Ogromna biblioteka gier, ocena 4.8/5. Sprawdź też Avalon Risto Pub (restauracja + gry).</p>
+        </div>
+      </div>
+      <div class="timeline-activity">
+        <div class="time-slot">PM</div>
+        <div class="activity-body">
+          <h4>&#127912; Palazzo Altemps - marmurowy surrealizm <span class="badge badge-paid">~10 EUR</span> <span class="badge badge-tata">tata</span></h4>
+          <p>Piazza Sant'Apollinare 46. Rzeźby klasyczne w renesansowym pałacu. Surrealne mitologiczne sceny. Wt-Nd 9:00-19:45.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 8 -->
+    <div class="timeline-day">
+      <div class="day-header">Dzień 8 - Dzień wspólny: Appijska & podziemia</div>
+      <div class="day-date">Poniedziałek 27 kwietnia</div>
+      <div class="timeline-activity">
+        <div class="time-slot">Rano</div>
+        <div class="activity-body">
+          <h4>&#128739; Via Appia Antica - starożytna droga <span class="badge badge-both">razem</span></h4>
+          <p>Uwaga: bezpłatne wejścia do muzeów to pierwsza niedziela miesiąca (5.04 lub 3.05). Poniedziałek to dobry dzień na spacer Via Appia, bo mniej tłumów.</p>
+        </div>
+      </div>
+      <div class="timeline-activity">
+        <div class="time-slot">10:00</div>
+        <div class="activity-body">
+          <h4>&#128739; Via Appia Antica + Katakumby <span class="badge badge-both">razem</span></h4>
+          <p>Starożytna droga rzymska. Katakumby San Callisto lub San Sebastiano (~8 EUR). Surrealne podziemne przestrzenie - Tata doceni atmosferę!</p>
+        </div>
+      </div>
+      <div class="timeline-activity">
+        <div class="time-slot">Wieczór</div>
+        <div class="activity-body">
+          <h4>&#127926; Koncert w kościele / Accademia di Santa Cecilia <span class="badge badge-tata">tata</span></h4>
+          <p>Sprawdź program na <a href="https://www.santacecilia.it" target="_blank">santacecilia.it</a>. Alternatywnie recitale organowe w Sant'Ignazio lub San Luigi dei Francesi (zwykle Pt-Nd wieczorem).</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 9 -->
+    <div class="timeline-day">
+      <div class="day-header">Dzień 9 - Villa d'Este & Tivoli (opcjonalnie)</div>
+      <div class="day-date">Wtorek 28 kwietnia</div>
+      <div class="timeline-activity">
+        <div class="time-slot">Rano</div>
+        <div class="activity-body">
+          <h4>&#127752; Opcja A: Tivoli - Villa d'Este <span class="badge badge-paid">~14 EUR</span> <span class="badge badge-both">razem</span></h4>
+          <p>30 km od Rzymu (pociąg z Tiburtina ~1h). Renesansowa willa ze surrealnymi fontannami, grotami i ogrodami. Raj dla malarza!</p>
+        </div>
+      </div>
+      <div class="timeline-activity">
+        <div class="time-slot">Rano</div>
+        <div class="activity-body">
+          <h4>&#127800; Opcja B: Roseto Comunale + Schody Hiszpańskie <span class="badge badge-free">gratis</span></h4>
+          <p>Ogród Różany otwarty od 21.04 (urodziny Rzymu). Schody Hiszpańskie z dywanem azalii w kwietniu. Plus Piazza Navona i Fontanna di Trevi.</p>
+        </div>
+      </div>
+      <div class="timeline-activity">
+        <div class="time-slot">Wieczór</div>
+        <div class="activity-body">
+          <h4>&#127860; Ostatnia kolacja w Rzymie <span class="badge badge-both">razem</span></h4>
+          <p>Cacio e pepe, carbonara, amatriciana - klasyczny rzymski wieczór. Może Testaccio? Autentyczna kuchnia.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 10 -->
+    <div class="timeline-day">
+      <div class="day-header">Dzień 10 - Wyjazd</div>
+      <div class="day-date">Środa 29 kwietnia</div>
+      <div class="timeline-activity">
+        <div class="time-slot">~11:00</div>
+        <div class="activity-body">
+          <h4>&#128188; Check-out</h4>
+          <p>Wymeldowanie do 11:00. Zostawić klucze/zamknąć Vikey.</p>
+        </div>
+      </div>
+      <div class="timeline-activity">
+        <div class="time-slot">PM</div>
+        <div class="activity-body">
+          <h4>&#127961; Ostatnie godziny w Rzymie</h4>
+          <p>Zostawić bagaż w przechowalni (np. Stow Your Bags @ Termini ~6 EUR/szt). Ostatni spacer, kawa, gelato.</p>
+        </div>
+      </div>
+      <div class="timeline-activity">
+        <div class="time-slot">~18:30</div>
+        <div class="activity-body">
+          <h4>&#128652; Terravision: Termini &#8594; Ciampino</h4>
+          <p>Bilet ważny 24h. Autobus jedzie ~40 min. Być na lotnisku minimum 2h przed lotem.</p>
+        </div>
+      </div>
+      <div class="timeline-activity">
+        <div class="time-slot">20:35</div>
+        <div class="activity-body">
+          <h4>&#9992; Lot powrotny FR1470 &#8594; KRK 22:35</h4>
+          <p>Arrivederci Roma! Do zobaczenia Kraków.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ART FOR TATA ==================== -->
+<hr class="divider">
+<div class="section" id="art">
+  <div class="section-header">
+    <h2>&#127912; Sztuka dla Taty - Malarza Surrealisty</h2>
+    <p>Specjalnie dobrane miejsca dla malarza surrealisty: De Chirico, Caravaggio, iluzje optyczne, metafizyka i oniryzm</p>
+  </div>
+
+  <div class="grid grid-3">
+    <div class="card">
+      <div class="card-icon" style="background: rgba(155,109,255,0.15); color: var(--accent-purple);">&#127912;</div>
+      <h3>Casa-Museo De Chirico</h3>
+      <p>Via Porta Rondanini 27. Dom ojca malarstwa metafizycznego - obrazy, rzeźby, pracownia. <strong>Rezerwacja konieczna.</strong></p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-paid">~10 EUR</span> <a href="https://www.casadechirico.org" target="_blank">casadechirico.org</a></p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background: rgba(201,168,76,0.15); color: var(--gold);">&#128065;</div>
+      <h3>Palazzo Spada - Iluzja Borrominiego</h3>
+      <p>Trompe-l'oeil perspektywa: korytarz 8m wygląda na 37m. Perfekcyjna iluzja optyczna - surrealistyczny must-see!</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-paid">5 EUR</span> Piazza Capo di Ferro 13</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background: rgba(76,175,130,0.15); color: var(--accent-green);">&#9962;</div>
+      <h3>San Luigi dei Francesi</h3>
+      <p>3 arcydzieła Caravaggia (Cykl Św. Mateusza). Mistrzostwo chiaroscuro, dramat światła. Piazza San Luigi dei Francesi.</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-free">gratis</span> 10:00-12:30, 15:30-19:00</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background: rgba(232,93,93,0.15); color: var(--accent-red);">&#9962;</div>
+      <h3>Santa Maria del Popolo</h3>
+      <p>Caravaggio: "Nawrócenie Pawła" i "Ukrzyżowanie Piotra" + freski Pintoricchia z surrealistycznym klimatem.</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-free">gratis</span> Piazza del Popolo 12</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background: rgba(74,123,247,0.15); color: var(--accent-blue);">&#127963;</div>
+      <h3>MAXXI</h3>
+      <p>Muzeum Sztuki XXI Wieku (Zaha Hadid). Najlepsza sztuka współczesna w Rzymie. Czwartek otwarty do 22:00!</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-paid">~12 EUR</span> Via Guido Reni 4A</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background: rgba(240,146,59,0.15); color: var(--accent-orange);">&#127963;</div>
+      <h3>GNAM - Galleria Nazionale</h3>
+      <p>Włoscy surrealiści, De Chirico, Modigliani, Morandi. Cała historia włoskiej sztuki nowoczesnej.</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-paid">~12 EUR</span> Viale delle Belle Arti 131</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background: rgba(232,111,173,0.15); color: var(--accent-pink);">&#128500;</div>
+      <h3>Palazzo Altemps</h3>
+      <p>Surrealne rzeźby klasyczne w renesansowym pałacu. Mitologiczne sceny, marmurowe marzenia senne.</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-paid">~10 EUR</span> Piazza Sant'Apollinare 46</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background: rgba(155,109,255,0.15); color: var(--accent-purple);">&#9962;</div>
+      <h3>Santa Maria della Vittoria</h3>
+      <p>"Ekstaza Św. Teresy" Berniniego - teatralna, zmysłowa, na granicy surrealizmu. Światło wpadające z ukrytego okna.</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-free">gratis</span> Via XX Settembre 17/a</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background: rgba(201,168,76,0.15); color: var(--gold);">&#127752;</div>
+      <h3>Villa d'Este (Tivoli)</h3>
+      <p>Wycieczka na dzień. Surrealne fontanny, groty, wodne iluzje. Renesansowy ogród jak z innego wymiaru.</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-paid">~14 EUR</span> 30 km od Rzymu (pociąg ~1h)</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top: 1.5rem;">
+    <h3>&#127926; Muzyka klasyczna i sakralna</h3>
+    <p>Recitale organowe w kościołach (zwykle Pt-Nd wieczorem): Sant'Ignazio, San Luigi dei Francesi, Bazylika San Paolo Fuori le Mura (niedziele po mszy, gratis). Koncerty symfoniczne: <a href="https://www.santacecilia.it" target="_blank">Accademia di Santa Cecilia</a> (Auditorium Parco della Musica). Sprawdź program na kwiecień 2026.</p>
+  </div>
+</div>
+
+<!-- ==================== SOCIAL FOR FRANEK ==================== -->
+<hr class="divider">
+<div class="section" id="social">
+  <div class="section-header">
+    <h2>&#127911; Social Life - Aktywności dla Franka</h2>
+    <p>Speed friending, open mic, gry planszowe, language exchange - na angielsku, w stylu Kontaktu i Królestwa Bez Kresu</p>
+  </div>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <div class="card-icon" style="background: rgba(74,123,247,0.15); color: var(--accent-blue);">&#127922;</div>
+      <h3>Avalon Roma - Board Games</h3>
+      <p>Najbliższy odpowiednik krakowskiego Kontaktu/Królestwa Bez Kresu w Rzymie. Ogromna biblioteka gier planszowych, ocena 4.8/5 (365+ recenzji). Jest też Avalon Risto Pub z jedzeniem.</p>
+      <p style="margin-top: 0.5rem;">Otwarty od 11:30 | Sprawdź na Google Maps</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background: rgba(232,111,173,0.15); color: var(--accent-pink);">&#127908;</div>
+      <h3>Open Mic Rome</h3>
+      <p>Aktywna społeczność muzycznych open mic (350+ osób na FB). Regularne wieczory w różnych lokalizacjach. MUZYKA, nie stand-up.</p>
+      <p style="margin-top: 0.5rem;">
+        <a href="https://www.openmicrome.com" target="_blank">openmicrome.com</a> |
+        <a href="https://www.facebook.com/groups/openmicrome/" target="_blank">Facebook group</a>
+      </p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background: rgba(76,175,130,0.15); color: var(--accent-green);">&#127760;</div>
+      <h3>Language Exchange</h3>
+      <p>"Roma Language and Social Exchange" na Meetup. Hard Rock Cafe Rome hostuje regularne tandem events. Szukaj na Tandem app + Facebook: "Language and Social Exchange in Rome".</p>
+      <p style="margin-top: 0.5rem;"><a href="https://www.tandem.net/learn-english-in-rome" target="_blank">tandem.net</a> | Meetup.com</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background: rgba(240,146,59,0.15); color: var(--accent-orange);">&#127867;</div>
+      <h3>Expat Meetups & Speed Friending</h3>
+      <p>Regularne spotkania międzynarodowe: CULTO (Trastevere), Holy Mary Cocktail Bar, Miramar (Piramide). Rome Expats na FB. Wtorkowe meetupy. "Speak & Sip Rome" organizuje eventy speed-friendingowe przy aperitivo.</p>
+      <p style="margin-top: 0.5rem;">Dołącz do "Expats Living in Rome" na Facebook! Meetup.com: "Rome International Meetup"</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background: rgba(155,109,255,0.15); color: var(--accent-purple);">&#127928;</div>
+      <h3>Music Jam Sessions</h3>
+      <p>"The Session - Open Mic Night and Jam" - regularne jam sessions w Rzymie. "Brillante Open Mic" at PLF. Sprawdź <a href="https://www.openmicrome.com" target="_blank">openmicrome.com</a> po aktualne lokalizacje.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background: rgba(232,93,93,0.15); color: var(--accent-red);">&#128064;</div>
+      <h3>Speak & Sip Rome</h3>
+      <p>Angielskie konwersacje przy aperitivo. Środowe eventy w Trastevere. Format speed-friendingowy! Idealne na poznanie ludzi.</p>
+    </div>
+  </div>
+
+  <div class="alert-info alert" style="margin-top: 1.25rem;">
+    <div class="alert-icon">&#128161;</div>
+    <div>
+      <h4>Pro tip</h4>
+      <p>Dołącz do tych grup na Facebooku TERAZ, żeby widzieć eventy bliżej dat: "Expats Living in Rome", "Open Mic Rome", "Language and Social Exchange in Rome | Tandem Linguistico Roma", "Trastevere, Rome - International Language & Social".</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== EVENTS ==================== -->
+<hr class="divider">
+<div class="section" id="events">
+  <div class="section-header">
+    <h2>&#127878; Eventy & Festiwale w Rzymie</h2>
+    <p>Co się dzieje 20-29 kwietnia 2026 w Wiecznym Mieście</p>
+  </div>
+
+  <div class="grid grid-2">
+    <div class="card" style="border-left: 3px solid var(--gold);">
+      <h3>&#127879; Natale di Roma - 2779 Urodziny Rzymu</h3>
+      <p><strong>17-21 kwietnia</strong> (główny dzień: 21.04)</p>
+      <p>Circo Massimo: parada ~2000 osób, gladiatorzy, westalki, obóz rzymski. Ceremonia odnowienia ognia. Darmowe wejścia do muzeów Roma Capitale 21.04!</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-free">gratis</span> <span class="badge badge-event">must-see</span></p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--accent-green);">
+      <h3>&#127774; Panteon - promień słoneczny</h3>
+      <p><strong>21 kwietnia, dokładnie w południe</strong></p>
+      <p>Raz w roku promień słońca przez oculus idealnie oświetla brązowy portal. Fenomen astronomiczny!</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-free">gratis</span></p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--accent-blue);">
+      <h3>&#127987; Festa della Liberazione</h3>
+      <p><strong>25 kwietnia</strong></p>
+      <p>Dzień Wyzwolenia Włoch. Ceremonie przy Vittoriano (Piazza Venezia). Święto państwowe - niektóre miejsca mogą być zamknięte.</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-free">gratis</span></p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--accent-purple);">
+      <h3>&#127801; Roseto Comunale</h3>
+      <p><strong>Od 21 kwietnia (otwarcie co roku)</strong></p>
+      <p>Rzymski Ogród Różany na Awentynie otwiera się na urodziny Rzymu. 1100 odmian róż. Widok na Circo Massimo.</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-free">gratis</span></p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--accent-pink);">
+      <h3>&#127800; Azalee na Schodach Hiszpańskich</h3>
+      <p><strong>Cały kwiecień</strong></p>
+      <p>Tradycyjny kolorowy dywan z azalii na Schodach Hiszpańskich. Fotograficzny raj!</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-free">gratis</span></p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--accent-orange);">
+      <h3>&#127464;&#127475; Festival dell'Oriente</h3>
+      <p><strong>24-26 kwietnia</strong></p>
+      <p>Festiwal Wschodu w Nuova Fiera di Roma. Kultura azjatycka, jedzenie, sztuki walki, taniec.</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-paid">biletowany</span></p>
+    </div>
+  </div>
+
+  <!-- WYSTAWY -->
+  <div class="section-header" style="margin-top: 3rem;">
+    <h2>&#128444; Wystawy czynne w trakcie pobytu</h2>
+    <p>Najciekawsze wystawy czasowe w Rzymie, 20-29 kwietnia 2026</p>
+  </div>
+
+  <div class="grid grid-2">
+    <div class="card" style="border-left: 3px solid var(--accent-blue);">
+      <h3>&#127754; Hokusai - Wielki Mistrz Sztuki Japońskiej</h3>
+      <p><strong>27.03 - 29.06.2026</strong> | Palazzo Bonaparte, Piazza Venezia 5</p>
+      <p>200 dzieł japońskiego mistrza, w tym słynna "Wielka Fala". Prace z Muzeum Narodowego w Krakowie! Pierwsza taka wystawa poza Polską.</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-paid">~16 EUR</span></p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--gold);">
+      <h3>&#127963; Skarby Faraonów (Treasures of the Pharaohs)</h3>
+      <p><strong>24.10.2025 - 14.06.2026</strong> | Scuderie del Quirinale</p>
+      <p>130 artefaktów z Egiptu: złote sarkofagi, maski pogrzebowe, królewska biżuteria. Złoty sarkofag Królowej Ahhotep, maska Amenemope.</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-paid">~16 EUR</span></p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--accent-purple);">
+      <h3>&#127912; Bernini e i Barberini <span class="badge badge-tata">must-see tata</span></h3>
+      <p><strong>12.02 - 14.06.2026</strong> | Palazzo Barberini, Via delle Quattro Fontane 13</p>
+      <p>Wielka wystawa o relacji Berniniego z papieżem Urbanem VIII. Rzeźby z Getty Museum i Thyssen-Bornemisza. Wt-Nd 10:00-19:00.</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-paid">~12 EUR</span></p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--accent-orange);">
+      <h3>&#127912; Impressionism and Beyond</h3>
+      <p><strong>4.12.2025 - 3.05.2026</strong> | Museo dell'Ara Pacis</p>
+      <p>52 arcydzieła z Detroit Institute of Arts: Courbet, Renoir, Degas, Cézanne, Van Gogh, Matisse, Picasso, Modigliani, Kandinsky. Codz. 9:30-19:30.</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-paid">~15 EUR</span></p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--accent-pink);">
+      <h3>&#127925; ROMASUONA: Music in Italy 1970-1979</h3>
+      <p><strong>14.04 - 12.07.2026</strong> | Palazzo delle Esposizioni</p>
+      <p>Wystawa o włoskiej muzyce lat 70. Interaktywna, multimedialna - idealna na popołudnie.</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-paid">biletowany</span></p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--accent-green);">
+      <h3>&#127912; Alice Pasquini: SCRAPS</h3>
+      <p><strong>14.03 - 24.04.2026</strong> | Rosso20sette Gallery</p>
+      <p>Solo show międzynarodowej artystki street artu. Ostatnie dni wystawy - idź do 24.04!</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-free">gratis</span></p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--accent-red);">
+      <h3>&#127912; Mattatoio - Sztuka Współczesna</h3>
+      <p><strong>1.04 - 17.05.2026</strong> | Mattatoio (Testaccio)</p>
+      <p>Dwie wystawy: "Beata moltitudo" (Alfredo Zelli) i "Con qualche parte della terra" (Vincenzo Scolamiero). Dawna rzeźnia = galeria!</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-free">gratis</span></p>
+    </div>
+  </div>
+
+  <!-- KONCERTY & OPERA -->
+  <div class="section-header" style="margin-top: 3rem;">
+    <h2>&#127926; Koncerty & Opera</h2>
+    <p>Muzyka na żywo w Rzymie, 20-29 kwietnia 2026</p>
+  </div>
+
+  <div class="grid grid-2">
+    <div class="card" style="border-left: 3px solid var(--accent-pink);">
+      <h3>&#127925; Ute Lemper: Paris Pari</h3>
+      <p><strong>20 kwietnia</strong> (wieczór - dzień przylotu!) | Auditorium Parco della Musica</p>
+      <p>Międzynarodowa gwiazda kabaretowa z nowym projektem paryskim. Niezapomniane show!</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-paid">biletowany</span></p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--accent-red);">
+      <h3>&#127917; Roméo et Juliette - Opera</h3>
+      <p><strong>28.04 - 6.05.2026</strong> | Teatro dell'Opera di Roma (Teatro Costanzi)</p>
+      <p>Gounod: Romeo i Julia. Premiera 28 kwietnia - przedostatni dzień pobytu! Sprawdź bilety: <a href="https://www.operaroma.it" target="_blank">operaroma.it</a></p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-paid">od ~30 EUR</span></p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--gold);">
+      <h3>&#127926; Italian Opera Night by Candle Glow</h3>
+      <p><strong>Codziennie w kwietniu</strong> | Rome Evangelical Church</p>
+      <p>Arie operowe przy świecach. Kameralny koncert w pięknym kościele. Romantyczna atmosfera!</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-paid">~25-35 EUR</span></p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--accent-purple);">
+      <h3>&#127928; Freddie Mercury Opera Show</h3>
+      <p><strong>Codziennie (oprócz sobót)</strong> | Opera da Camera di Roma</p>
+      <p>Teatralny show łączący operę z muzyką Queen. Unikalne doświadczenie!</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-paid">~25 EUR</span></p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--accent-blue);">
+      <h3>&#127926; Koncerty w kościołach</h3>
+      <p><strong>Cały kwiecień</strong> | Różne kościoły</p>
+      <p>Chiesa di S. Paolo entro le Mura, All Saints Church, Oratorio del Gonfalone. Sprawdź: <a href="https://www.romeoperatickets.com" target="_blank">romeoperatickets.com</a></p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-paid">22-82 EUR</span></p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--accent-green);">
+      <h3>&#127931; Accademia di Santa Cecilia</h3>
+      <p><strong>Cały kwiecień</strong> | Auditorium Parco della Musica</p>
+      <p>Rzymska orkiestra symfoniczna. Sprawdź program: <a href="https://www.santacecilia.it" target="_blank">santacecilia.it</a></p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-paid">biletowany</span> <span class="badge badge-tata">tata</span></p>
+    </div>
+  </div>
+
+  <!-- DARMOWE OKAZJE -->
+  <div class="section-header" style="margin-top: 3rem;">
+    <h2>&#127381; Darmowe okazje</h2>
+    <p>Bezpłatne wejścia i atrakcje, które warto złapać</p>
+  </div>
+
+  <div class="grid grid-3">
+    <div class="card" style="border-left: 3px solid var(--accent-green);">
+      <h3>&#9961; Muzea Watykańskie - GRATIS!</h3>
+      <p><strong>Niedziela 26 kwietnia</strong></p>
+      <p>Ostatnia niedziela miesiąca = bezpłatne wejście! Otwarte 9:00-14:00 (ostatnie wejście 12:30). UWAGA: ogromne kolejki, przyjdź wcześnie!</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-free">gratis</span> <span class="badge badge-event">must-see</span></p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--gold);">
+      <h3>&#127963; Natale di Roma - darmowe muzea</h3>
+      <p><strong>21 kwietnia</strong></p>
+      <p>Muzea Kapitolińskie, Ara Pacis, Villa Torlonia, Rynek Trajana - bezpłatne wejście na urodziny Rzymu!</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-free">gratis</span></p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--accent-purple);">
+      <h3>&#127801; Roseto Comunale</h3>
+      <p><strong>Od 21 kwietnia</strong></p>
+      <p>Rzymski Ogród Różany na Awentynie. 1100 odmian róż, widok na Circo Massimo.</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-free">gratis</span></p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--accent-pink);">
+      <h3>&#127800; Azalee na Schodach Hiszpańskich</h3>
+      <p><strong>Cały kwiecień</strong></p>
+      <p>Tradycyjny kolorowy dywan z azalii.</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-free">gratis</span></p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--accent-red);">
+      <h3>&#127912; Mattatoio - Testaccio</h3>
+      <p><strong>1.04 - 17.05.2026</strong></p>
+      <p>Darmowa sztuka współczesna w dawnej rzeźni.</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-free">gratis</span></p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--accent-green);">
+      <h3>&#127912; Alice Pasquini: SCRAPS</h3>
+      <p><strong>Do 24.04</strong></p>
+      <p>Darmowa wystawa street artu w Rosso20sette Gallery.</p>
+      <p style="margin-top: 0.5rem;"><span class="badge badge-free">gratis</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PRACTICAL ==================== -->
+<hr class="divider">
+<div class="section" id="practical">
+  <div class="section-header">
+    <h2>&#128161; Informacje praktyczne</h2>
+    <p>Wszystko co warto wiedzieć przed wyjazdem</p>
+  </div>
+
+  <div class="practical-grid">
+    <div class="practical-item">
+      <h4>&#128652; Transport w Rzymie</h4>
+      <ul>
+        <li>Metro: 2 linie (A i B), bilet jednorazowy 1,50 EUR (100 min)</li>
+        <li>Bilet dobowy: 7 EUR, 48h: 12,50 EUR, 72h: 18 EUR</li>
+        <li>Roma Pass 72h: 38,50 EUR (transport + muzea)</li>
+        <li>Najbliższe metro do mieszkania: sprawdź Cornelia lub Valle Aurelia (linia A)</li>
+      </ul>
+    </div>
+    <div class="practical-item">
+      <h4>&#127777; Pogoda (kwiecień)</h4>
+      <ul>
+        <li>Temperatura: 12-22°C (ciepło w dzień, chłodniej wieczorem)</li>
+        <li>Deszcz: możliwy, weź lekką kurtkę/parasol</li>
+        <li>Idealna pogoda na spacery i zwiedzanie</li>
+        <li>Ubrania: warstwy + wygodne buty!</li>
+      </ul>
+    </div>
+    <div class="practical-item">
+      <h4>&#128179; Płatności & koszty</h4>
+      <ul>
+        <li>Revolut/karta bezstykowa - działa wszędzie</li>
+        <li>Podatek miejski: 6 EUR/os/noc = 108 EUR (na miejscu)</li>
+        <li>Espresso: ~1-1,50 EUR (przy barze taniej!)</li>
+        <li>Pizza al taglio: 3-5 EUR</li>
+        <li>Pasta w restauracji: 10-15 EUR</li>
+      </ul>
+    </div>
+    <div class="practical-item">
+      <h4>&#128205; Ważne numery & kontakty</h4>
+      <ul>
+        <li>Numer alarmowy: <code>112</code></li>
+        <li>Host (Giuseppe & Cesare): <code>+39 347 533 1835</code></li>
+        <li>Booking.com (PL): <code>22 306 08 55</code></li>
+        <li>Booking.com (EN): <code>+44 20 3320 2609</code></li>
+        <li>Terravision: <code>customerservices@terravision.eu</code></li>
+      </ul>
+    </div>
+    <div class="practical-item">
+      <h4>&#128221; Przed wyjazdem - checklist</h4>
+      <ul>
+        <li>&#9744; Vikey check-in online: <a href="https://guest.vikey.it/checkin/JAIUHWM6">link</a></li>
+        <li>&#9744; Aplikacja Ryanair z kartami pokładowymi</li>
+        <li>&#9744; Bilety Terravision w Google Wallet</li>
+        <li>&#9744; Rezerwacja Casa De Chirico</li>
+        <li>&#9744; Bilety Koloseum + Muzea Watykańskie</li>
+        <li>&#9744; Dołącz do FB: Expats Living in Rome, Open Mic Rome</li>
+        <li>&#9744; Sprawdź program Santa Cecilia (kwiecień)</li>
+      </ul>
+    </div>
+    <div class="practical-item">
+      <h4>&#9962; Etykieta w kościołach</h4>
+      <ul>
+        <li>Ramiona i kolana zakryte (obowiązkowo!)</li>
+        <li>Nie wchodzić podczas mszy (chyba że uczestniczysz)</li>
+        <li>Cicho, bez flash</li>
+        <li>Drobne na oświetlenie obrazów (1-2 EUR)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top: 1.5rem;">
+    <h3>&#127828; Gdzie jeść - polecane dzielnice</h3>
+    <p><strong>Trastevere</strong> - najbardziej klimatyczna dzielnica z mnóstwem restauracji. <strong>Testaccio</strong> - autentyczna kuchnia rzymska (cacio e pepe, carbonara). <strong>Borgo Pio</strong> - blisko domu, tuż przy Watykanie. <strong>Monti</strong> - hipsterska dzielnica z wine barami. <strong>Campo de' Fiori</strong> - poranny targ (codziennie!) + wieczorne życie towarzyskie. Zasada: jedz tam gdzie jedzą Włosi, unikaj restauracji z obrazkami w menu przy głównych atrakcjach.</p>
+  </div>
+</div>
+
+<!-- ==================== BUDGET SUMMARY ==================== -->
+<hr class="divider">
+<div class="section">
+  <div class="section-header">
+    <h2>&#128176; Podsumowanie kosztów</h2>
+  </div>
+
+  <div class="info-banner" style="border-color: rgba(201,168,76,0.15); background: linear-gradient(135deg, var(--card) 0%, rgba(201,168,76,0.06) 100%);">
+    <h3 style="color: var(--gold);">Zapłacone</h3>
+    <div class="detail-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+      <div class="detail-item">
+        <label>Loty Ryanair (2 os.)</label>
+        <span class="mono">1 359,98 PLN</span>
+      </div>
+      <div class="detail-item">
+        <label>Apartament (9 nocy)</label>
+        <span class="mono">1 195,93 EUR</span>
+      </div>
+      <div class="detail-item">
+        <label>Terravision (2 os., tam i z powrotem)</label>
+        <span class="mono">117,00 PLN</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-banner" style="border-color: rgba(240,146,59,0.15); background: linear-gradient(135deg, var(--card) 0%, rgba(240,146,59,0.06) 100%);">
+    <h3 style="color: var(--accent-orange);">Do zapłaty na miejscu</h3>
+    <div class="detail-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+      <div class="detail-item">
+        <label>Podatek miejski (6 EUR x 2 os x 9 nocy)</label>
+        <span class="mono">108,00 EUR</span>
+      </div>
+      <div class="detail-item">
+        <label>Transport (metro/bus, ~)</label>
+        <span class="mono">~50-80 EUR</span>
+      </div>
+      <div class="detail-item">
+        <label>Jedzenie (~25-40 EUR/os/dzień)</label>
+        <span class="mono">~450-720 EUR</span>
+      </div>
+      <div class="detail-item">
+        <label>Muzea & bilety</label>
+        <span class="mono">~80-150 EUR</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== FOOTER ==================== -->
+<div class="footer">
+  <p>Roma Trip 2026 | Franek & Tata - Marcin | Przygotowano z pomocą Claude</p>
+  <p style="margin-top: 0.5rem; font-size: 0.7rem; color: var(--text-muted);">Ostatnia aktualizacja: 11 kwietnia 2026</p>
+</div>
+
+<script>
+// Sticky nav active state
+const sections = document.querySelectorAll('.section[id]');
+const navLinks = document.querySelectorAll('.nav a');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - 120;
+    if (scrollY >= sectionTop) {
+      current = section.getAttribute('id');
+    }
+  });
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === '#' + current) {
+      link.classList.add('active');
+    }
+  });
+});
+</script>
+
+</body>
+</html>
