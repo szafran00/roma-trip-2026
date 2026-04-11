@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "roma-trip",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["http-server", "C:/Projects/roma-trip-2026", "-p", "8090", "-c-1"],
+      "port": 8090
+    }
+  ]
+}

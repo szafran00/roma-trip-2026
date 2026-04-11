@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Roma Trip 2026 - Franek & Tata</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <style>
   :root {
     --gold: #C9A84C;
@@ -513,9 +514,247 @@
     .timeline-activity { flex-direction: column; gap: 0.25rem; }
   }
 
+  /* HAMBURGER MENU */
+  .hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--gold);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.75rem 1rem;
+    line-height: 1;
+    z-index: 101;
+  }
+
+  @media (max-width: 768px) {
+    .hamburger { display: block; }
+    .nav-inner {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      padding: 0;
+    }
+    .nav-inner.open {
+      display: flex;
+    }
+    .nav a {
+      padding: 0.9rem 1.5rem;
+      font-size: 0.88rem;
+      border-bottom: none;
+      border-left: 3px solid transparent;
+    }
+    .nav a:hover, .nav a.active {
+      border-bottom: none;
+      border-left-color: var(--gold);
+      background: rgba(201,168,76,0.05);
+    }
+  }
+
+  /* MAP */
+  #map {
+    width: 100%;
+    height: 500px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    z-index: 1;
+  }
+
+  .map-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+    margin-top: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+
+  .map-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  .map-legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.5);
+    flex-shrink: 0;
+  }
+
+  /* Leaflet dark theme overrides */
+  .leaflet-control-layers {
+    background: var(--card) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 12px !important;
+    color: var(--text) !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4) !important;
+  }
+  .leaflet-control-layers label { color: var(--text-muted) !important; font-size: 0.82rem; }
+  .leaflet-control-layers-separator { border-top-color: var(--border) !important; }
+  .leaflet-control-zoom a {
+    background: var(--card) !important;
+    color: var(--gold) !important;
+    border-color: var(--border) !important;
+  }
+  .leaflet-control-zoom a:hover { background: var(--card-hover) !important; }
+  .leaflet-popup-content-wrapper {
+    background: var(--card) !important;
+    color: var(--text) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5) !important;
+  }
+  .leaflet-popup-tip { background: var(--card) !important; }
+  .leaflet-popup-content { font-family: 'Inter', sans-serif !important; font-size: 0.85rem !important; }
+  .leaflet-popup-content a { color: var(--accent-blue) !important; }
+  .leaflet-popup-close-button { color: var(--text-muted) !important; }
+
+  /* COUNTDOWN */
+  .countdown-grid {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+  }
+
+  .countdown-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    text-align: center;
+    min-width: 100px;
+  }
+
+  .countdown-box .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    transition: transform 0.15s;
+  }
+
+  .countdown-box .num.tick {
+    transform: scale(1.15);
+  }
+
+  .countdown-box .label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 0.4rem;
+  }
+
+  .countdown-status {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--gold-light);
+    margin-bottom: 1rem;
+  }
+
+  /* CHECKLIST */
+  .checklist-progress {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .checklist-progress-bar {
+    height: 8px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 0.5rem;
+  }
+
+  .checklist-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-green), var(--gold));
+    border-radius: 4px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  .checklist-progress-text {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .checklist-items { list-style: none; padding: 0; }
+
+  .checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.8rem 1rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    font-size: 0.88rem;
+    color: var(--text);
+  }
+
+  .checklist-item:hover { background: var(--card-hover); }
+
+  .checklist-item.checked {
+    background: rgba(76,175,130,0.06);
+    border-color: rgba(76,175,130,0.15);
+    color: var(--text-muted);
+    text-decoration: line-through;
+  }
+
+  .checklist-item.checked .check-box {
+    background: var(--accent-green);
+    border-color: var(--accent-green);
+  }
+
+  .checklist-item.bounce { animation: checkBounce 0.3s ease; }
+
+  @keyframes checkBounce {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+  }
+
+  .check-box {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--text-muted);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    color: white;
+    transition: all 0.2s;
+  }
+
+  @media (max-width: 768px) {
+    #map { height: 350px; }
+    .countdown-box { min-width: 70px; padding: 1rem 1.25rem; }
+    .countdown-box .num { font-size: 1.8rem; }
+  }
+
   /* PRINT */
   @media print {
-    .nav, .scroll-hint { display: none; }
+    .nav, .scroll-hint, .hamburger { display: none; }
     .hero { min-height: auto; padding: 2rem; }
     body { background: white; color: #333; }
     .card, .info-banner, .timeline-activity, .practical-item, .alert {
@@ -549,15 +788,18 @@
 <!-- ==================== NAVIGATION ==================== -->
 <a href="#flights" class="skip-link" style="position:absolute;left:-9999px;top:0;z-index:999;background:var(--gold);color:var(--dark);padding:0.5rem 1rem;font-weight:600;">Przejdź do treści</a>
 <nav class="nav" id="nav" aria-label="Nawigacja strony">
-  <div class="nav-inner">
+  <button class="hamburger" id="hamburger" aria-label="Menu">&#9776;</button>
+  <div class="nav-inner" id="nav-inner">
     <a href="#flights">&#9992; Lot</a>
     <a href="#accommodation">&#127968; Mieszkanie</a>
     <a href="#transport">&#128652; Transport</a>
     <a href="#itinerary">&#128197; Plan dnia</a>
-    <a href="#art">&#127912; Sztuka & Tata</a>
-    <a href="#social">&#127911; Social & Franek</a>
+    <a href="#art">&#127912; Sztuka</a>
+    <a href="#social">&#127911; Social</a>
     <a href="#events">&#127878; Eventy</a>
+    <a href="#map-section">&#128506; Mapa</a>
     <a href="#practical">&#128161; Praktyczne</a>
+    <a href="#countdown-section">&#9200; Odliczanie</a>
   </div>
 </nav>
 
@@ -1411,6 +1653,28 @@
   </div>
 </div>
 
+<!-- ==================== MAP ==================== -->
+<hr class="divider">
+<div class="section" id="map-section">
+  <div class="section-header">
+    <h2>&#128506; Interaktywna mapa Rzymu</h2>
+    <p>Wszystkie lokalizacje z planu podróży - klikaj markery, włączaj/wyłączaj warstwy</p>
+  </div>
+  <div id="map"></div>
+  <div class="map-legend">
+    <div class="map-legend-item"><div class="map-legend-dot" style="background:#E85D5D;"></div> Mieszkanie</div>
+    <div class="map-legend-item"><div class="map-legend-dot" style="background:#4A7BF7;"></div> Transport</div>
+    <div class="map-legend-item"><div class="map-legend-dot" style="background:#C9A84C;"></div> Zabytki</div>
+    <div class="map-legend-item"><div class="map-legend-dot" style="background:#9B6DFF;"></div> Muzea & Galerie</div>
+    <div class="map-legend-item"><div class="map-legend-dot" style="background:#4CAF82;"></div> Kościoły</div>
+    <div class="map-legend-item"><div class="map-legend-dot" style="background:#E86FAD;"></div> Koncerty & Opera</div>
+    <div class="map-legend-item"><div class="map-legend-dot" style="background:#00BCD4;"></div> Social & Fun</div>
+    <div class="map-legend-item"><div class="map-legend-dot" style="background:#F0923B;"></div> Events</div>
+    <div class="map-legend-item"><div class="map-legend-dot" style="background:#FFB74D;"></div> Jedzenie</div>
+    <div class="map-legend-item"><div class="map-legend-dot" style="background:#26A69A;"></div> Wycieczki</div>
+  </div>
+</div>
+
 <!-- ==================== PRACTICAL ==================== -->
 <hr class="divider">
 <div class="section" id="practical">
@@ -1535,32 +1799,249 @@
   </div>
 </div>
 
+<!-- ==================== COUNTDOWN + CHECKLIST ==================== -->
+<hr class="divider">
+<div class="section" id="countdown-section">
+  <div class="section-header">
+    <h2>&#9200; Odliczanie do wylotu</h2>
+  </div>
+
+  <div class="countdown-status" id="countdown-status">Do wylotu pozostało:</div>
+  <div class="countdown-grid" id="countdown-grid">
+    <div class="countdown-box"><div class="num" id="cd-days">--</div><div class="label">dni</div></div>
+    <div class="countdown-box"><div class="num" id="cd-hours">--</div><div class="label">godzin</div></div>
+    <div class="countdown-box"><div class="num" id="cd-mins">--</div><div class="label">minut</div></div>
+    <div class="countdown-box"><div class="num" id="cd-secs">--</div><div class="label">sekund</div></div>
+  </div>
+
+  <div class="section-header" style="margin-top: 3rem;">
+    <h2>&#128221; Checklist przed wyjazdem</h2>
+    <p>Zaznaczaj wykonane zadania - postęp zapisuje się automatycznie w przeglądarce</p>
+  </div>
+
+  <div class="checklist-progress">
+    <div class="checklist-progress-text">
+      <span id="cl-text">0 z 12 ukończono</span>
+      <span id="cl-pct">0%</span>
+    </div>
+    <div class="checklist-progress-bar">
+      <div class="checklist-progress-fill" id="cl-fill"></div>
+    </div>
+  </div>
+
+  <ul class="checklist-items" id="checklist">
+    <li class="checklist-item" data-idx="0"><div class="check-box"></div><span>Vikey online check-in: guest.vikey.it/checkin/JAIUHWM6</span></li>
+    <li class="checklist-item" data-idx="1"><div class="check-box"></div><span>Aplikacja Ryanair z kartami pokładowymi (obaj!)</span></li>
+    <li class="checklist-item" data-idx="2"><div class="check-box"></div><span>Bilety Terravision w Google Wallet</span></li>
+    <li class="checklist-item" data-idx="3"><div class="check-box"></div><span>Rezerwacja Casa De Chirico (casadechirico.org)</span></li>
+    <li class="checklist-item" data-idx="4"><div class="check-box"></div><span>Bilety online: Koloseum + Muzea Watykańskie</span></li>
+    <li class="checklist-item" data-idx="5"><div class="check-box"></div><span>Dołącz do FB: Expats Living in Rome, Open Mic Rome</span></li>
+    <li class="checklist-item" data-idx="6"><div class="check-box"></div><span>Sprawdź program Accademia di Santa Cecilia (kwiecień)</span></li>
+    <li class="checklist-item" data-idx="7"><div class="check-box"></div><span>Sprawdź openmicrome.com na eventy 20-29.04</span></li>
+    <li class="checklist-item" data-idx="8"><div class="check-box"></div><span>Spakuj ładowarkę i powerbank</span></li>
+    <li class="checklist-item" data-idx="9"><div class="check-box"></div><span>Revolut zasilony (EUR)</span></li>
+    <li class="checklist-item" data-idx="10"><div class="check-box"></div><span>Parasol / lekka kurtka</span></li>
+    <li class="checklist-item" data-idx="11"><div class="check-box"></div><span>Wygodne buty na spacery</span></li>
+  </ul>
+</div>
+
 <!-- ==================== FOOTER ==================== -->
 <div class="footer">
   <p>Roma Trip 2026 | Franek & Tata - Marcin | Przygotowano z pomocą Claude</p>
   <p style="margin-top: 0.5rem; font-size: 0.7rem; color: var(--text-muted);">Ostatnia aktualizacja: 11 kwietnia 2026</p>
 </div>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
-// Sticky nav active state
-const sections = document.querySelectorAll('.section[id]');
-const navLinks = document.querySelectorAll('.nav a');
-
-window.addEventListener('scroll', () => {
-  let current = '';
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop - 120;
-    if (scrollY >= sectionTop) {
-      current = section.getAttribute('id');
-    }
-  });
-  navLinks.forEach(link => {
-    link.classList.remove('active');
-    if (link.getAttribute('href') === '#' + current) {
-      link.classList.add('active');
-    }
+// ===== HAMBURGER MENU =====
+const hamburger = document.getElementById('hamburger');
+const navInner = document.getElementById('nav-inner');
+hamburger.addEventListener('click', () => {
+  const isOpen = navInner.classList.toggle('open');
+  hamburger.innerHTML = isOpen ? '&#10005;' : '&#9776;';
+});
+navInner.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    navInner.classList.remove('open');
+    hamburger.innerHTML = '&#9776;';
   });
 });
+
+// ===== ACTIVE NAV =====
+const sections = document.querySelectorAll('.section[id]');
+const navLinks = document.querySelectorAll('.nav a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (scrollY >= s.offsetTop - 120) current = s.getAttribute('id');
+  });
+  navLinks.forEach(l => {
+    l.classList.remove('active');
+    if (l.getAttribute('href') === '#' + current) l.classList.add('active');
+  });
+});
+
+// ===== LEAFLET MAP =====
+const map = L.map('map', { zoomControl: true }).setView([41.9028, 12.4964], 13);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
+  maxZoom: 19
+}).addTo(map);
+
+function mkr(lat, lng, color, name, desc) {
+  const m = L.circleMarker([lat, lng], {
+    radius: 8, fillColor: color, color: '#fff', weight: 2, opacity: 0.9, fillOpacity: 0.85
+  });
+  const gurl = 'https://www.google.com/maps/dir/?api=1&destination=' + lat + ',' + lng;
+  m.bindPopup('<div style="min-width:180px"><strong>' + name + '</strong><br><span style="color:#9999B0;font-size:0.8rem">' + desc + '</span><br><a href="' + gurl + '" target="_blank" style="display:inline-block;margin-top:6px;padding:4px 10px;background:#4A7BF7;color:#fff!important;border-radius:6px;text-decoration:none;font-size:0.78rem">&#129517; Nawiguj</a></div>');
+  return m;
+}
+
+// Warstwy
+const layers = {};
+function addLayer(name, markers) {
+  const lg = L.layerGroup(markers).addTo(map);
+  layers[name] = lg;
+}
+
+addLayer('&#127968; Mieszkanie', [
+  mkr(41.8990,12.4385,'#E85D5D','San Peter\'s Heaven\'s Door','Via S. Evaristo 157, Aurelio')
+]);
+addLayer('&#9992; Transport', [
+  mkr(41.7994,12.5946,'#4A7BF7','Lotnisko Ciampino','Przylot/odlot Ryanair'),
+  mkr(41.9006,12.5021,'#4A7BF7','Roma Termini (Via Giolitti)','Przystanek Terravision')
+]);
+addLayer('&#127963; Zabytki', [
+  mkr(41.8902,12.4922,'#C9A84C','Koloseum','Amfiteatr Flawiuszów'),
+  mkr(41.8986,12.4769,'#C9A84C','Panteon','21.04 - efekt promienia słońca!'),
+  mkr(41.9065,12.4536,'#C9A84C','Muzea Watykańskie','26.04 - ostatnia niedziela = GRATIS!'),
+  mkr(41.9022,12.4539,'#C9A84C','Bazylika Św. Piotra','Kopuła 8 EUR - najlepszy widok'),
+  mkr(41.8946,12.4831,'#C9A84C','Vittoriano','25.04 - ceremonie Festa della Liberazione'),
+  mkr(41.9060,12.4828,'#C9A84C','Schody Hiszpańskie','Azalee w kwietniu!'),
+  mkr(41.9009,12.4833,'#C9A84C','Fontanna di Trevi','Klasyka Rzymu')
+]);
+addLayer('&#127912; Muzea & Galerie', [
+  mkr(41.8990,12.4764,'#9B6DFF','Casa De Chirico','Dom ojca malarstwa metafizycznego'),
+  mkr(41.9282,12.4679,'#9B6DFF','MAXXI','Budynek Zahy Hadid, czw do 22:00'),
+  mkr(41.9165,12.4822,'#9B6DFF','GNAM - Galleria Nazionale','Surrealiści, De Chirico, Modigliani'),
+  mkr(41.8938,12.4715,'#9B6DFF','Palazzo Spada','Iluzja optyczna Borrominiego!'),
+  mkr(41.9009,12.4728,'#9B6DFF','Palazzo Altemps','Surrealne rzeźby mitologiczne'),
+  mkr(41.9028,12.4897,'#9B6DFF','Palazzo Barberini','Wystawa Bernini e i Barberini'),
+  mkr(41.8966,12.4817,'#9B6DFF','Palazzo Bonaparte','Wystawa Hokusai ~16 EUR'),
+  mkr(41.8992,12.4876,'#9B6DFF','Scuderie del Quirinale','Skarby Faraonów ~16 EUR'),
+  mkr(41.9062,12.4754,'#9B6DFF','Museo dell\'Ara Pacis','Impressionism and Beyond'),
+  mkr(41.8993,12.4904,'#9B6DFF','Palazzo delle Esposizioni','ROMASUONA: Music in Italy 1970-1979'),
+  mkr(41.8766,12.4751,'#9B6DFF','Mattatoio','Sztuka współczesna - gratis!')
+]);
+addLayer('&#9961; Kościoły', [
+  mkr(41.8994,12.4736,'#4CAF82','San Luigi dei Francesi','3x Caravaggio - gratis!'),
+  mkr(41.9113,12.4764,'#4CAF82','Santa Maria del Popolo','2x Caravaggio + Pintoricchio'),
+  mkr(41.9046,12.4944,'#4CAF82','Santa Maria della Vittoria','Ekstaza Św. Teresy - Bernini'),
+  mkr(41.8893,12.4693,'#4CAF82','Santa Maria in Trastevere','Piękne mozaiki średniowieczne'),
+  mkr(41.9012,12.4897,'#4CAF82','Sant\'Andrea al Quirinale','Klejnot baroku Berniniego')
+]);
+addLayer('&#127917; Koncerty & Opera', [
+  mkr(41.9270,12.4748,'#E86FAD','Auditorium Parco della Musica','Ute Lemper 20.04 + Santa Cecilia'),
+  mkr(41.9002,12.4963,'#E86FAD','Teatro dell\'Opera','Roméo et Juliette - premiera 28.04')
+]);
+addLayer('&#127922; Social & Fun', [
+  mkr(41.8929,12.4849,'#00BCD4','Avalon Roma','Gry planszowe - ocena 4.8/5')
+]);
+addLayer('&#127878; Events', [
+  mkr(41.8847,12.4853,'#F0923B','Circo Massimo','Natale di Roma 17-21.04'),
+  mkr(41.8840,12.4803,'#F0923B','Roseto Comunale','Ogród Różany - od 21.04, gratis')
+]);
+addLayer('&#127829; Jedzenie', [
+  mkr(41.8892,12.4694,'#FFB74D','Trastevere','Najbardziej klimatyczna dzielnica'),
+  mkr(41.8780,12.4759,'#FFB74D','Testaccio','Autentyczna kuchnia rzymska'),
+  mkr(41.9017,12.4604,'#FFB74D','Borgo Pio','Blisko domu, przy Watykanie'),
+  mkr(41.8955,12.4721,'#FFB74D','Campo de\' Fiori','Poranny targ + wieczorne życie'),
+  mkr(41.8952,12.4924,'#FFB74D','Monti','Hipsterska dzielnica, wine bary')
+]);
+addLayer('&#128507; Wycieczki', [
+  mkr(41.8560,12.5125,'#26A69A','Via Appia Antica','Starożytna droga + Katakumby')
+]);
+
+L.control.layers(null, layers, { collapsed: true, position: 'topright' }).addTo(map);
+
+// ===== COUNTDOWN =====
+function updateCountdown() {
+  const departure = new Date('2026-04-20T16:45:00+02:00');
+  const returnDate = new Date('2026-04-29T22:35:00+02:00');
+  const now = new Date();
+  const status = document.getElementById('countdown-status');
+  const grid = document.getElementById('countdown-grid');
+
+  if (now >= returnDate) {
+    status.innerHTML = '&#127470;&#127481; Arrivederci Roma! Wspomnienia zostają na zawsze &#10084;';
+    grid.style.display = 'none';
+    return;
+  }
+
+  if (now >= departure) {
+    const dayNum = Math.floor((now - departure) / 86400000) + 1;
+    status.innerHTML = '&#127470;&#127481; Jesteście w Rzymie! Dzień ' + dayNum + ' z 10 &#127829;';
+    grid.style.display = 'none';
+    return;
+  }
+
+  grid.style.display = 'flex';
+  const diff = departure - now;
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+
+  function upd(id, val) {
+    const el = document.getElementById(id);
+    const str = String(val).padStart(2, '0');
+    if (el.textContent !== str) {
+      el.textContent = str;
+      el.classList.add('tick');
+      setTimeout(() => el.classList.remove('tick'), 150);
+    }
+  }
+  upd('cd-days', d);
+  upd('cd-hours', h);
+  upd('cd-mins', m);
+  upd('cd-secs', s);
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+// ===== CHECKLIST =====
+const STORAGE_KEY = 'roma-trip-2026-checklist';
+const items = document.querySelectorAll('.checklist-item');
+let state = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+
+function renderChecklist() {
+  let done = 0;
+  items.forEach(item => {
+    const idx = item.dataset.idx;
+    const checked = !!state[idx];
+    item.classList.toggle('checked', checked);
+    item.querySelector('.check-box').innerHTML = checked ? '&#10003;' : '';
+    if (checked) done++;
+  });
+  const total = items.length;
+  const pct = Math.round((done / total) * 100);
+  document.getElementById('cl-text').textContent = done + ' z ' + total + ' ukończono';
+  document.getElementById('cl-pct').textContent = pct + '%';
+  document.getElementById('cl-fill').style.width = pct + '%';
+}
+
+items.forEach(item => {
+  item.addEventListener('click', () => {
+    const idx = item.dataset.idx;
+    state[idx] = !state[idx];
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    item.classList.add('bounce');
+    setTimeout(() => item.classList.remove('bounce'), 300);
+    renderChecklist();
+  });
+});
+
+renderChecklist();
 </script>
 
 </body>
