@@ -639,6 +639,60 @@
     flex-shrink: 0;
   }
 
+  /* STAR MARKERS - 3 kluczowe miejsca */
+  .star-marker {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .star-marker .star-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    border: 3px solid #fff;
+    box-shadow: 0 0 12px rgba(0,0,0,0.5);
+    z-index: 2;
+    position: relative;
+  }
+
+  .star-marker .star-pulse {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    animation: starPulse 2s ease-out infinite;
+    z-index: 1;
+  }
+
+  @keyframes starPulse {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(2.5); opacity: 0; }
+  }
+
+  .star-marker .star-label {
+    position: absolute;
+    top: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 6px;
+    color: #fff;
+    letter-spacing: 0.03em;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  }
+
   /* Leaflet dark theme overrides */
   .leaflet-control-layers {
     background: var(--card) !important;
@@ -838,10 +892,10 @@
       <div class="hero-cd-box"><div class="hc-num" id="hc-secs">--</div><div class="hc-label">sekund</div></div>
     </div>
   </div>
-  <div class="scroll-hint">
+  <a href="#flights" class="scroll-hint" style="text-decoration:none;color:var(--text-muted);cursor:pointer;">
     przewiń w dół
     <span>&#8595;</span>
-  </div>
+  </a>
 </section>
 
 <!-- ==================== NAVIGATION ==================== -->
@@ -1721,7 +1775,10 @@
   </div>
   <div id="map"></div>
   <div class="map-legend">
-    <div class="map-legend-item"><div class="map-legend-dot" style="background:#E85D5D;"></div> Mieszkanie</div>
+    <div class="map-legend-item"><div class="map-legend-dot" style="background:#E85D5D; box-shadow: 0 0 8px #E85D5D;"></div> <strong style="color:var(--text);">&#127968; Mieszkanie</strong></div>
+    <div class="map-legend-item"><div class="map-legend-dot" style="background:#9B6DFF; box-shadow: 0 0 8px #9B6DFF;"></div> <strong style="color:var(--text);">&#127912; Wystawa Taty</strong></div>
+    <div class="map-legend-item"><div class="map-legend-dot" style="background:#4A7BF7; box-shadow: 0 0 8px #4A7BF7;"></div> <strong style="color:var(--text);">&#128652; Dworzec Termini</strong></div>
+    <div class="map-legend-item" style="width:100%;border-top:1px solid rgba(255,255,255,0.06);padding-top:0.5rem;margin-top:0.25rem;font-size:0.7rem;color:var(--text-muted);">&#128308; Pulsujące markery = 3 kluczowe miejsca</div>
     <div class="map-legend-item"><div class="map-legend-dot" style="background:#4A7BF7;"></div> Transport</div>
     <div class="map-legend-item"><div class="map-legend-dot" style="background:#C9A84C;"></div> Zabytki</div>
     <div class="map-legend-item"><div class="map-legend-dot" style="background:#9B6DFF;"></div> Muzea & Galerie</div>
@@ -1944,6 +2001,24 @@ function mkr(lat, lng, color, name, desc) {
   return m;
 }
 
+function starMkr(lat, lng, color, emoji, label, name, desc) {
+  const icon = L.divIcon({
+    className: '',
+    iconSize: [36, 36],
+    iconAnchor: [18, 18],
+    popupAnchor: [0, -22],
+    html: '<div class="star-marker">' +
+      '<div class="star-pulse" style="background:' + color + '"></div>' +
+      '<div class="star-icon" style="background:' + color + '">' + emoji + '</div>' +
+      '<div class="star-label" style="background:' + color + '">' + label + '</div>' +
+      '</div>'
+  });
+  const m = L.marker([lat, lng], { icon: icon, zIndexOffset: 1000 });
+  const gurl = 'https://www.google.com/maps/dir/?api=1&destination=' + lat + ',' + lng;
+  m.bindPopup('<div style="min-width:200px"><strong style="font-size:1rem">' + name + '</strong><br><span style="color:#9999B0;font-size:0.82rem">' + desc + '</span><br><a href="' + gurl + '" target="_blank" style="display:inline-block;margin-top:8px;padding:5px 12px;background:#4A7BF7;color:#fff!important;border-radius:6px;text-decoration:none;font-size:0.82rem">&#129517; Nawiguj</a></div>');
+  return m;
+}
+
 // Warstwy
 const layers = {};
 function addLayer(name, markers) {
@@ -1951,12 +2026,16 @@ function addLayer(name, markers) {
   layers[name] = lg;
 }
 
-addLayer('&#127968; Mieszkanie', [
-  mkr(41.8990,12.4385,'#E85D5D','San Peter\'s Heaven\'s Door','Via S. Evaristo 157, Aurelio')
-]);
+// === 3 KLUCZOWE MIEJSCA (wyróżnione) ===
+const starHome = starMkr(41.8990,12.4385,'#E85D5D','&#127968;','MIESZKANIE','San Peter\'s Heaven\'s Door','Via S. Evaristo 157, Scala C, Aurelio. Check-in od 15:00, check-out do 11:00.');
+const starGallery = starMkr(41.8998,12.4735,'#9B6DFF','&#127912;','WYSTAWA TATY','Galleria Angelica','Wystawa taty - malarza surrealisty. Piazza di Sant\'Agostino.');
+const starTermini = starMkr(41.9006,12.5021,'#4A7BF7','&#128652;','DWORZEC','Roma Termini (Via Giolitti)','Główny dworzec. Przystanek Terravision z/na lotnisko Ciampino.');
+starHome.addTo(map);
+starGallery.addTo(map);
+starTermini.addTo(map);
+
 addLayer('&#9992; Transport', [
-  mkr(41.7994,12.5946,'#4A7BF7','Lotnisko Ciampino','Przylot/odlot Ryanair'),
-  mkr(41.9006,12.5021,'#4A7BF7','Roma Termini (Via Giolitti)','Przystanek Terravision')
+  mkr(41.7994,12.5946,'#4A7BF7','Lotnisko Ciampino','Przylot/odlot Ryanair')
 ]);
 addLayer('&#127963; Zabytki', [
   mkr(41.8902,12.4922,'#C9A84C','Koloseum','Amfiteatr Flawiuszów'),
