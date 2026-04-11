@@ -93,6 +93,58 @@
 
   .hero .dates .sep { color: var(--text-muted); }
 
+  .hero-countdown {
+    margin-top: 2.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-cd-box {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 0.8rem 1.2rem;
+    text-align: center;
+    min-width: 72px;
+    backdrop-filter: blur(10px);
+  }
+
+  .hero-cd-box .hc-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    transition: transform 0.15s;
+  }
+
+  .hero-cd-box .hc-num.tick {
+    transform: scale(1.12);
+  }
+
+  .hero-cd-box .hc-label {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.3rem;
+  }
+
+  .hero-cd-status {
+    margin-top: 2rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--gold-light);
+    opacity: 0.9;
+  }
+
+  @media (max-width: 768px) {
+    .hero-cd-box { min-width: 60px; padding: 0.6rem 0.9rem; }
+    .hero-cd-box .hc-num { font-size: 1.4rem; }
+  }
+
   .scroll-hint {
     position: absolute;
     bottom: 2rem;
@@ -778,6 +830,13 @@
       <span class="sep">|</span>
       <span>9 nocy</span>
     </div>
+    <div class="hero-cd-status" id="hero-cd-status"></div>
+    <div class="hero-countdown" id="hero-countdown">
+      <div class="hero-cd-box"><div class="hc-num" id="hc-days">--</div><div class="hc-label">dni</div></div>
+      <div class="hero-cd-box"><div class="hc-num" id="hc-hours">--</div><div class="hc-label">godzin</div></div>
+      <div class="hero-cd-box"><div class="hc-num" id="hc-mins">--</div><div class="hc-label">minut</div></div>
+      <div class="hero-cd-box"><div class="hc-num" id="hc-secs">--</div><div class="hc-label">sekund</div></div>
+    </div>
   </div>
   <div class="scroll-hint">
     przewiń w dół
@@ -799,7 +858,7 @@
     <a href="#events">&#127878; Eventy</a>
     <a href="#map-section">&#128506; Mapa</a>
     <a href="#practical">&#128161; Praktyczne</a>
-    <a href="#countdown-section">&#9200; Odliczanie</a>
+    <a href="#countdown-section">&#128221; Checklist</a>
   </div>
 </nav>
 
@@ -1799,22 +1858,10 @@
   </div>
 </div>
 
-<!-- ==================== COUNTDOWN + CHECKLIST ==================== -->
+<!-- ==================== CHECKLIST ==================== -->
 <hr class="divider">
 <div class="section" id="countdown-section">
   <div class="section-header">
-    <h2>&#9200; Odliczanie do wylotu</h2>
-  </div>
-
-  <div class="countdown-status" id="countdown-status">Do wylotu pozostało:</div>
-  <div class="countdown-grid" id="countdown-grid">
-    <div class="countdown-box"><div class="num" id="cd-days">--</div><div class="label">dni</div></div>
-    <div class="countdown-box"><div class="num" id="cd-hours">--</div><div class="label">godzin</div></div>
-    <div class="countdown-box"><div class="num" id="cd-mins">--</div><div class="label">minut</div></div>
-    <div class="countdown-box"><div class="num" id="cd-secs">--</div><div class="label">sekund</div></div>
-  </div>
-
-  <div class="section-header" style="margin-top: 3rem;">
     <h2>&#128221; Checklist przed wyjazdem</h2>
     <p>Zaznaczaj wykonane zadania - postęp zapisuje się automatycznie w przeglądarce</p>
   </div>
@@ -1964,13 +2011,13 @@ addLayer('&#128507; Wycieczki', [
 
 L.control.layers(null, layers, { collapsed: true, position: 'topright' }).addTo(map);
 
-// ===== COUNTDOWN =====
-function updateCountdown() {
+// ===== HERO COUNTDOWN =====
+function updateHeroCountdown() {
   const departure = new Date('2026-04-20T16:45:00+02:00');
   const returnDate = new Date('2026-04-29T22:35:00+02:00');
   const now = new Date();
-  const status = document.getElementById('countdown-status');
-  const grid = document.getElementById('countdown-grid');
+  const status = document.getElementById('hero-cd-status');
+  const grid = document.getElementById('hero-countdown');
 
   if (now >= returnDate) {
     status.innerHTML = '&#127470;&#127481; Arrivederci Roma! Wspomnienia zostają na zawsze &#10084;';
@@ -1985,6 +2032,7 @@ function updateCountdown() {
     return;
   }
 
+  status.textContent = 'Do wylotu pozostało:';
   grid.style.display = 'flex';
   const diff = departure - now;
   const d = Math.floor(diff / 86400000);
@@ -1994,6 +2042,7 @@ function updateCountdown() {
 
   function upd(id, val) {
     const el = document.getElementById(id);
+    if (!el) return;
     const str = String(val).padStart(2, '0');
     if (el.textContent !== str) {
       el.textContent = str;
@@ -2001,13 +2050,13 @@ function updateCountdown() {
       setTimeout(() => el.classList.remove('tick'), 150);
     }
   }
-  upd('cd-days', d);
-  upd('cd-hours', h);
-  upd('cd-mins', m);
-  upd('cd-secs', s);
+  upd('hc-days', d);
+  upd('hc-hours', h);
+  upd('hc-mins', m);
+  upd('hc-secs', s);
 }
-updateCountdown();
-setInterval(updateCountdown, 1000);
+updateHeroCountdown();
+setInterval(updateHeroCountdown, 1000);
 
 // ===== CHECKLIST =====
 const STORAGE_KEY = 'roma-trip-2026-checklist';
